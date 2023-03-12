@@ -35,22 +35,22 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using (var db = new PlayerContext(setting))
-{
-    var player = new FootballPlayersEntity
-    {
-        Forename = "Bob",
-        Surname = "Popov",
-        Sex = Sex.Male,
-        Birthday = new DateTime(),
-        Country = Country.USA,
-        TeamName = new TeamNameEntity
-        {
-            Name = "Bool"
-        }
-    };
-    db.Players.AddRange(player);
-    db.SaveChanges();
-}
+// using (var db = new PlayerContext(setting))
+// {
+//     var player = new FootballPlayersEntity
+//     {
+//         Forename = "Bob",
+//         Surname = "Popov",
+//         Sex = Sex.Male,
+//         Birthday = new DateTime(),
+//         Country = Country.USA,
+//         TeamName = new TeamNameEntity
+//         {
+//             Name = "Bool"
+//         }
+//     };
+//     db.Players.AddRange(player);
+//     db.SaveChanges();
+// }
 
 app.Run();

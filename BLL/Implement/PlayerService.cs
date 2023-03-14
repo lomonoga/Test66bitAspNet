@@ -11,11 +11,11 @@ namespace Test66bit.BLL.Implement;
 
 public class PlayerService : IPlayerService
 {
-    private PlayerContext db;
+    private FootballContext db;
 
-    public PlayerService(PlayerContext playerContext)
+    public PlayerService(FootballContext footballContext)
     {
-        this.db = playerContext;
+        this.db = footballContext;
     }
     
     /// <summary>
@@ -24,7 +24,7 @@ public class PlayerService : IPlayerService
     /// <param name="playerDTO">Light Player Model</param>
     public void AddPlayer(PlayerDTO playerDTO)
     {
-        FootballPlayersEntity player = new ()
+        Player player = new ()
         {
             Forename = playerDTO.Forename,
             Surname = playerDTO.Surname,
@@ -41,8 +41,8 @@ public class PlayerService : IPlayerService
     public IEnumerable<PlayerDTO> GetAllPlayers()
     {
         var mapper = new MapperConfiguration(cfg 
-            => cfg.CreateMap<FootballPlayersEntity, PlayerDTO>()).CreateMapper();   
-        return mapper.Map<IEnumerable<FootballPlayersEntity>, List<PlayerDTO>>(db.Players.ToList());
+            => cfg.CreateMap<Player, PlayerDTO>()).CreateMapper();   
+        return mapper.Map<IEnumerable<Player>, List<PlayerDTO>>(db.Players.ToList());
     }
 
     /// <summary>
@@ -55,8 +55,8 @@ public class PlayerService : IPlayerService
             .FirstOrDefault(pl => pl.Id == playerDTO.Id);
         if (player == null) return;
         player = new MapperConfiguration(cfg 
-            => cfg.CreateMap<PlayerDTO, FootballPlayersEntity>()).CreateMapper()
-            .Map<PlayerDTO, FootballPlayersEntity>(playerDTO);
+            => cfg.CreateMap<PlayerDTO, Player>()).CreateMapper()
+            .Map<PlayerDTO, Player>(playerDTO);
         db.Players.Update(player);
         db.SaveChanges();
     }

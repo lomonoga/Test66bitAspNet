@@ -1,8 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using Test66bit.BLL.Implement;
+using Test66bit.BLL.Interfaces;
 using Test66bit.DAL;
 using Test66bit.DAL.EF;
 using Test66bit.DAL.Entities;
 using Test66bit.DAL.Entities.EnumEntities;
+using Test66bit.DAL.Interfaces;
+using Test66bit.DAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +19,18 @@ builder.Services.AddSwaggerGen();
 
 var setting = new DalSetting(builder.Configuration);
 
+//DAL
 builder.Services.AddSingleton(_ => setting);
-builder.Services.AddDbContext<PlayerContext>(options => options.UseNpgsql(setting.ConnectionString));
+builder.Services.AddDbContext<FootballContext>(options => options.UseNpgsql(setting.ConnectionString));
+
+builder.Services.AddScoped<IRepository<Player>, PlayerRepository>();
+builder.Services.AddScoped<IRepository<TeamName>, TeamNameRepository>();
+builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+
+
+
+//BLL
+builder.Services.AddScoped<IPlayerService, PlayerService>();
 
 
 var app = builder.Build();
@@ -30,6 +44,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseStaticFiles();
 
 app.UseAuthorization();
 

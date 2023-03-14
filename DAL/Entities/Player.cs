@@ -10,7 +10,7 @@ namespace Test66bit.DAL.Entities;
 /// </summary>
 [Table("players")]
 [Index(nameof(Id), IsUnique = true)]
-public class FootballPlayersEntity
+public class Player
 {
     [Column("Id")]
     [Key]
@@ -32,7 +32,7 @@ public class FootballPlayersEntity
     public int TeamNameId { get; init; }
     
     [ForeignKey(nameof(TeamNameId))]
-    public TeamNameEntity? TeamName { get; init; }
+    public TeamName? TeamName { get; init; }
     
     [Column("country")]
     public Country Country { get; init; }

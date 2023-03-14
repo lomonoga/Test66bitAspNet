@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Test66bit.BLL.DTO;
 using Test66bit.BLL.Interfaces;
 using Test66bit.DAL.EF;
+using Test66bit.DAL.Entities;
 
 namespace Test66bit.WEB.Controllers;
 
@@ -8,18 +10,16 @@ namespace Test66bit.WEB.Controllers;
 [Route("[controller]")]
 public class HomePageController : Controller
 {
-    private PlayerContext _playerContext;
     private IPlayerService _playerService;
 
-    public HomePageController(PlayerContext playerContext, IPlayerService playerService)
+    public HomePageController(IPlayerService playerService)
     {
-        _playerContext = playerContext;
         _playerService = playerService;
     }
     
     [HttpGet(Name = "Het")]
-    public int Get()
+    public IEnumerable<PlayerDTO> Get()
     {
-        return 0;
+        return _playerService.GetAllPlayers();
     }
 }

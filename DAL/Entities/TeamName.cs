@@ -6,7 +6,7 @@ namespace Test66bit.DAL.Entities;
 
 [Table("team")]
 [Index(nameof(Name), IsUnique = true)]
-public class TeamNameEntity
+public class TeamName
 {
     [Key]
     [Column("teamId")]

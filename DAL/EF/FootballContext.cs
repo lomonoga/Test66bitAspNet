@@ -4,14 +4,14 @@ using Test66bit.DAL.Entities.EnumEntities;
 
 namespace Test66bit.DAL.EF;
 
-public class PlayerContext : DbContext
+public sealed class FootballContext : DbContext
 {
     private readonly DalSetting _dalSetting;
 
-    public DbSet<FootballPlayersEntity> Players { get; set; }
-    public DbSet<TeamNameEntity> Team { get; set; }
+    public DbSet<Player> Players { get; set; }
+    public DbSet<TeamName> TeamNames { get; set; }
 
-    public PlayerContext(DalSetting dalSetting)
+    public FootballContext(DalSetting dalSetting)
     {
         _dalSetting = dalSetting;
         // Check Database for existence 

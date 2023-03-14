@@ -15,7 +15,7 @@ public class PlayerDTO
 
     public DateTime Birthday { get; init; }
 
-    public TeamNameEntity? TeamName { get; init; }
+    public TeamName? TeamName { get; init; }
 
     public Country Country { get; init; }
 }

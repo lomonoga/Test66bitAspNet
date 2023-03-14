@@ -4,7 +4,8 @@ namespace Test66bit.BLL.Interfaces;
 
 public interface IPlayerService
 {
-    public void AddPlayer();
-    public IEnumerable<Player> GetAllPlayers();
-    public void UpdatePlayerById(int id);
+    public void AddPlayer(PlayerDTO playerDTO);
+    public IEnumerable<PlayerDTO> GetAllPlayers();
+    public void UpdatePlayer(PlayerDTO playerDTO);
+    public IEnumerable<TeamDTO> GetAllTeams();
 }

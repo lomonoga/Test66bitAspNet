@@ -16,6 +16,7 @@ public class HomePageController : Controller
         _playerContext = playerContext;
         _playerService = playerService;
     }
+    
     [HttpGet(Name = "Het")]
     public int Get()
     {

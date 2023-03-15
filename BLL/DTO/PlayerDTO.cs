@@ -1,4 +1,5 @@
-﻿using Test66bit.DAL.Entities;
+﻿using Humanizer;
+using Test66bit.DAL.Entities;
 using Test66bit.DAL.Entities.EnumEntities;
 
 namespace Test66bit.BLL.DTO;
@@ -14,6 +15,8 @@ public class PlayerDTO
     public Sex Sex { get; init; }
 
     public DateTime Birthday { get; init; }
+    
+    public int TeamId { get; init; }
 
     public TeamName? TeamName { get; init; }
 

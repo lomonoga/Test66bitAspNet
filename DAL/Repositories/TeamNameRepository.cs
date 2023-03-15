@@ -29,6 +29,11 @@ public class TeamNameRepository : IRepository<TeamName>
         db.TeamNames.Add(teamName);
     }
 
+    public void CreateRange(params TeamName[] teamNames)
+    {
+        db.TeamNames.AddRange(teamNames);
+    }
+
     public void Update(TeamName teamName)
     {
         db.Entry(teamName).State = EntityState.Modified;

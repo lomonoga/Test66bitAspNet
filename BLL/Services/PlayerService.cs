@@ -1,21 +1,18 @@
-﻿using System.Reflection;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using Test66bit.BLL.DTO;
 using Test66bit.BLL.Interfaces;
-using Test66bit.DAL;
-using Test66bit.DAL.EF;
 using Test66bit.DAL.Entities;
+using Test66bit.DAL.Interfaces;
 
-namespace Test66bit.BLL.Implement;
+namespace Test66bit.BLL.Services;
 
 public class PlayerService : IPlayerService
 {
-    private FootballContext db;
+    private IUnitOfWork db;
 
-    public PlayerService(FootballContext footballContext)
+    public PlayerService(IUnitOfWork unitOfWork)
     {
-        this.db = footballContext;
+        this.db = unitOfWork;
     }
     
     /// <summary>
@@ -24,6 +21,8 @@ public class PlayerService : IPlayerService
     /// <param name="playerDTO">Light Player Model</param>
     public void AddPlayer(PlayerDTO playerDTO)
     {
+        // var teamName = db.TeamNames.GetById(playerDTO.TeamId);
+        // var newTeam = ...
         Player player = new ()
         {
             Forename = playerDTO.Forename,
@@ -33,8 +32,8 @@ public class PlayerService : IPlayerService
             TeamName = playerDTO.TeamName,
             Country = playerDTO.Country,
         };
-        db.Players.AddRange(player);
-        db.SaveChanges();
+        db.Players.Create(player);
+        db.Save();
     }
 
     /// <returns>All players from DB PlayerContext</returns>
@@ -42,23 +41,22 @@ public class PlayerService : IPlayerService
     {
         var mapper = new MapperConfiguration(cfg 
             => cfg.CreateMap<Player, PlayerDTO>()).CreateMapper();   
-        return mapper.Map<IEnumerable<Player>, List<PlayerDTO>>(db.Players.ToList());
+        return mapper.Map<IEnumerable<Player>, List<PlayerDTO>>(db.Players.GetAll());
     }
 
     /// <summary>
     /// Allows update one player data
     /// </summary>
     /// <param name="id">Id of the player</param>
-    public void UpdatePlayer(PlayerDTO playerDTO)
+    public void UpdatePlayer(int playerID)
     {
         var player = db.Players
-            .FirstOrDefault(pl => pl.Id == playerDTO.Id);
-        if (player == null) return;
-        player = new MapperConfiguration(cfg 
-            => cfg.CreateMap<PlayerDTO, Player>()).CreateMapper()
-            .Map<PlayerDTO, Player>(playerDTO);
+            .GetById(playerID);
+        // player = new MapperConfiguration(cfg 
+        //     => cfg.CreateMap<PlayerDTO, Player>()).CreateMapper()
+        //     .Map<PlayerDTO, Player>(playerDTO);
         db.Players.Update(player);
-        db.SaveChanges();
+        db.Save();
     }
 
     /// <summary>
@@ -69,5 +67,10 @@ public class PlayerService : IPlayerService
     public IEnumerable<TeamDTO> GetAllTeams()
     {
         throw new Exception();
+    }
+
+    public void Dispose()
+    {
+        db.Dispose();
     }
 }

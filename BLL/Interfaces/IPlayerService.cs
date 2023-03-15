@@ -6,6 +6,6 @@ public interface IPlayerService
 {
     public void AddPlayer(PlayerDTO playerDTO);
     public IEnumerable<PlayerDTO> GetAllPlayers();
-    public void UpdatePlayer(PlayerDTO playerDTO);
+    public void UpdatePlayer(int playerID);
     public IEnumerable<TeamDTO> GetAllTeams();
 }

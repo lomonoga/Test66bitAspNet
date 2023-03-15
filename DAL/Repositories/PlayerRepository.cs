@@ -29,6 +29,11 @@ public class PlayerRepository : IRepository<Player>
         db.Players.Add(player);
     }
 
+    public void CreateRange(params Player[] players)
+    {
+        db.Players.AddRange(players);
+    }
+
     public void Update(Player player)
     {
         db.Entry(player).State = EntityState.Modified;

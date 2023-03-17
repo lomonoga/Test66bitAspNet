@@ -18,8 +18,8 @@ public class HomePageController : Controller
     }
     
     [HttpGet(Name = "Het")]
-    public IEnumerable<PlayerDTO> Get()
+    public IEnumerable<TeamNameDTO> Get()
     {
-        return _playerService.GetAllPlayers();
+        return _playerService.GetAllNameTeams();
     }
 }

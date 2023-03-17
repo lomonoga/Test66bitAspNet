@@ -6,19 +6,19 @@ namespace Test66bit.BLL.DTO;
 
 public class PlayerDTO
 {
-    public int Id { get; init; }
+    public int Id { get; set; }
 
-    public string Forename { get; init; }
+    public string Forename { get; set; }
     
-    public string Surname  { get; init; }
+    public string Surname  { get; set; }
 
-    public Sex Sex { get; init; }
+    public Sex Sex { get; set; }
 
-    public DateTime Birthday { get; init; }
+    public DateTime Birthday { get; set; }
     
-    public int TeamId { get; init; }
+    public int TeamId { get; set; }
 
-    public TeamName? TeamName { get; init; }
+    public TeamName? TeamName { get; set; }
 
-    public Country Country { get; init; }
+    public Country Country { get; set; }
 }

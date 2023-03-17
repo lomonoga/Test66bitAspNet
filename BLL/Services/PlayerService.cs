@@ -9,10 +9,13 @@ namespace Test66bit.BLL.Services;
 public class PlayerService : IPlayerService
 {
     private IUnitOfWork db;
+    private readonly IMapper _mapper;
 
-    public PlayerService(IUnitOfWork unitOfWork)
+    public PlayerService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         this.db = unitOfWork;
+        this._mapper = mapper;
+
     }
     
     /// <summary>
@@ -23,15 +26,7 @@ public class PlayerService : IPlayerService
     {
         // var teamName = db.TeamNames.GetById(playerDTO.TeamId);
         // var newTeam = ...
-        Player player = new ()
-        {
-            Forename = playerDTO.Forename,
-            Surname = playerDTO.Surname,
-            Sex = playerDTO.Sex,
-            Birthday = playerDTO.Birthday,
-            TeamName = playerDTO.TeamName,
-            Country = playerDTO.Country,
-        };
+        var player = _mapper.Map<Player>(playerDTO);
         db.Players.Create(player);
         db.Save();
     }
@@ -39,22 +34,19 @@ public class PlayerService : IPlayerService
     /// <returns>All players from DB PlayerContext</returns>
     public IEnumerable<PlayerDTO> GetAllPlayers()
     {
-        var mapper = new MapperConfiguration(cfg 
-            => cfg.CreateMap<Player, PlayerDTO>()).CreateMapper();   
-        return mapper.Map<IEnumerable<Player>, List<PlayerDTO>>(db.Players.GetAll());
+        return _mapper.Map<IEnumerable<PlayerDTO>>(db.Players.GetAll());
     }
 
     /// <summary>
     /// Allows update one player data
     /// </summary>
-    /// <param name="id">Id of the player</param>
-    public void UpdatePlayer(int playerID)
+    /// <param name="playerDTO">Player model to change in DB</param>
+    public void UpdatePlayer(PlayerDTO playerDTO)
     {
         var player = db.Players
-            .GetById(playerID);
-        // player = new MapperConfiguration(cfg 
-        //     => cfg.CreateMap<PlayerDTO, Player>()).CreateMapper()
-        //     .Map<PlayerDTO, Player>(playerDTO);
+            .GetById(playerDTO.Id);
+
+        var model = _mapper.Map<Player>(playerDTO);
         db.Players.Update(player);
         db.Save();
     }
@@ -64,11 +56,9 @@ public class PlayerService : IPlayerService
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<TeamDTO> GetAllTeams()
+    public IEnumerable<TeamNameDTO> GetAllNameTeams()
     {
-        var mapper = new MapperConfiguration(cfg 
-            => cfg.CreateMap<TeamName, TeamDTO>()).CreateMapper();   
-        return mapper.Map<IEnumerable<TeamName>, List<TeamDTO>>(db.TeamNames.GetAll());
+        return _mapper.Map<IEnumerable<TeamNameDTO>>(db.TeamNames.GetAll());
     }
 
     public void Dispose()

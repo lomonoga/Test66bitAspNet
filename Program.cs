@@ -1,5 +1,7 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Test66bit.BLL.Interfaces;
+using Test66bit.BLL.MappingProfiles;
 using Test66bit.BLL.Services;
 using Test66bit.DAL;
 using Test66bit.DAL.EF;
@@ -10,7 +12,16 @@ using Test66bit.DAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Mapping
+
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
+
+builder.Services.AddSingleton(_ => mapperConfig.CreateMapper());
+
+//Services
 
 builder.Services.AddControllers();
 

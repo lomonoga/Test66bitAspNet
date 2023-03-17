@@ -66,7 +66,9 @@ public class PlayerService : IPlayerService
     /// <exception cref="Exception"></exception>
     public IEnumerable<TeamDTO> GetAllTeams()
     {
-        throw new Exception();
+        var mapper = new MapperConfiguration(cfg 
+            => cfg.CreateMap<TeamName, TeamDTO>()).CreateMapper();   
+        return mapper.Map<IEnumerable<TeamName>, List<TeamDTO>>(db.TeamNames.GetAll());
     }
 
     public void Dispose()

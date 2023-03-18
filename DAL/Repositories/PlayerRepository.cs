@@ -19,7 +19,7 @@ public class PlayerRepository : IRepository<Player>
         return db.Players.Include(o => o.TeamName);
     }
 
-    public Player GetById(int id)
+    public Player GetById(int? id)
     {
         return db.Players.Find(id)!;
     }
@@ -36,7 +36,7 @@ public class PlayerRepository : IRepository<Player>
 
     public void Update(Player player)
     {
-        db.Entry(player).State = EntityState.Modified;
+        db.Players.Update(player);
     }
 
     public void Delete(int id)
@@ -44,5 +44,10 @@ public class PlayerRepository : IRepository<Player>
         var player = db.Players.Find(id);
         if (player != null)
             db.Players.Remove(player);
+    }
+
+    public Player GetFirstOfDefault(Player player)
+    {
+        return db.Players.FirstOrDefault(player);
     }
 }

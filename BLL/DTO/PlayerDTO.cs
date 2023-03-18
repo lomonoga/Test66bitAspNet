@@ -1,4 +1,5 @@
-﻿using Humanizer;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Humanizer;
 using Test66bit.DAL.Entities;
 using Test66bit.DAL.Entities.EnumEntities;
 
@@ -15,10 +16,10 @@ public class PlayerDTO
     public Sex Sex { get; set; }
 
     public DateTime Birthday { get; set; }
-    
-    public int TeamId { get; set; }
 
-    public TeamName? TeamName { get; set; }
+    public int TeamNameId { get; set; }
+    
+    public string _TeamName { get; init; }
 
     public Country Country { get; set; }
 }

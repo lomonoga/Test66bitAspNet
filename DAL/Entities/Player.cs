@@ -32,7 +32,7 @@ public class Player
     public int TeamNameId { get; init; }
     
     [ForeignKey(nameof(TeamNameId))]
-    public TeamName? TeamName { get; init; }
+    public TeamName? TeamName { get; set; }
     
     [Column("country")]
     public Country Country { get; init; }

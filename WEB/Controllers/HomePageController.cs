@@ -10,16 +10,24 @@ namespace Test66bit.WEB.Controllers;
 [Route("[controller]")]
 public class HomePageController : Controller
 {
-    private IPlayerService _playerService;
+    private IFootballService _footballService;
 
-    public HomePageController(IPlayerService playerService)
+    public HomePageController(IFootballService footballService)
     {
-        _playerService = playerService;
+        _footballService = footballService;
     }
     
     [HttpGet(Name = "Het")]
-    public IEnumerable<TeamNameDTO> Get()
+    public int Get()
     {
-        return _playerService.GetAllNameTeams();
+        _footballService.UpdatePlayer(
+            new PlayerDTO
+            {
+                Forename = "tetUp1111111111111111111111",
+                Surname = "tet1",
+                _TeamName = "frfc31111111cwq"
+            }
+        );
+        return 1;
     }
 }

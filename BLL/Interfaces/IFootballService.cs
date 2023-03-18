@@ -2,7 +2,7 @@
 
 namespace Test66bit.BLL.Interfaces;
 
-public interface IPlayerService
+public interface IFootballService
 {
     public void AddPlayer(PlayerDTO playerDTO);
     public IEnumerable<PlayerDTO> GetAllPlayers();

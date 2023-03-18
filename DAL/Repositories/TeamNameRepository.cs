@@ -19,7 +19,7 @@ public class TeamNameRepository : IRepository<TeamName>
         return db.TeamNames;
     }
 
-    public TeamName GetById(int id)
+    public TeamName GetById(int? id)
     {
         return db.TeamNames.Find(id)!;
     }
@@ -27,6 +27,7 @@ public class TeamNameRepository : IRepository<TeamName>
     public void Create(TeamName teamName)
     {
         db.TeamNames.Add(teamName);
+        db.SaveChanges();
     }
 
     public void CreateRange(params TeamName[] teamNames)
@@ -36,7 +37,7 @@ public class TeamNameRepository : IRepository<TeamName>
 
     public void Update(TeamName teamName)
     {
-        db.Entry(teamName).State = EntityState.Modified;
+        db.Update(teamName);
     }
 
     public void Delete(int id)
@@ -44,5 +45,10 @@ public class TeamNameRepository : IRepository<TeamName>
         var teamName = db.TeamNames.Find(id);
         if (teamName != null)
             db.TeamNames.Remove(teamName);
+    }
+
+    public TeamName GetFirstOfDefault(TeamName teamName)
+    {
+        return db.TeamNames.FirstOrDefault(t => t.Name == teamName.Name);
     }
 }

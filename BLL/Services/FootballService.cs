@@ -6,12 +6,12 @@ using Test66bit.DAL.Interfaces;
 
 namespace Test66bit.BLL.Services;
 
-public class PlayerService : IPlayerService
+public class FootballService : IFootballService
 {
     private IUnitOfWork db;
     private readonly IMapper _mapper;
 
-    public PlayerService(IUnitOfWork unitOfWork, IMapper mapper)
+    public FootballService(IUnitOfWork unitOfWork, IMapper mapper)
     {
         this.db = unitOfWork;
         this._mapper = mapper;
@@ -24,9 +24,13 @@ public class PlayerService : IPlayerService
     /// <param name="playerDTO">Light Player Model</param>
     public void AddPlayer(PlayerDTO playerDTO)
     {
-        // var teamName = db.TeamNames.GetById(playerDTO.TeamId);
-        // var newTeam = ...
         var player = _mapper.Map<Player>(playerDTO);
+        // var teamName = db.TeamNames.GetFirstOfDefault(player.TeamName);
+        // if (teamName == null)
+        // {
+        //     db.TeamNames.Create(
+        //         new TeamName{Name = playerDTO.TeamName});
+        // }
         db.Players.Create(player);
         db.Save();
     }
@@ -43,10 +47,14 @@ public class PlayerService : IPlayerService
     /// <param name="playerDTO">Player model to change in DB</param>
     public void UpdatePlayer(PlayerDTO playerDTO)
     {
-        var player = db.Players
-            .GetById(playerDTO.Id);
-
-        var model = _mapper.Map<Player>(playerDTO);
+        if (db.Players.GetById(playerDTO.Id) == null) return;
+        var teamName = new TeamName {Name = playerDTO._TeamName};
+        if (db.TeamNames.GetFirstOfDefault(teamName) == null)
+            db.TeamNames.Create(teamName);
+        
+        teamName = db.TeamNames.GetFirstOfDefault(teamName);
+        playerDTO.TeamNameId = teamName.Id;
+        var player = _mapper.Map<Player>(playerDTO);
         db.Players.Update(player);
         db.Save();
     }
@@ -60,6 +68,11 @@ public class PlayerService : IPlayerService
     {
         return _mapper.Map<IEnumerable<TeamNameDTO>>(db.TeamNames.GetAll());
     }
+
+    // private bool IsNameTeamInstance(TeamName teamName)
+    // {
+    //     return db.TeamNames.GetFirstOfDefault(teamName) != null;
+    // }
 
     public void Dispose()
     {

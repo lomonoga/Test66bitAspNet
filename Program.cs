@@ -41,7 +41,7 @@ builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
 
 
 //BLL
-builder.Services.AddScoped<IPlayerService, PlayerService>();
+builder.Services.AddScoped<IFootballService, FootballService>();
 
 
 var app = builder.Build();

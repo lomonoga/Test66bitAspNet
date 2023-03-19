@@ -20,12 +20,12 @@ public class HomePageController : Controller
     [HttpGet(Name = "Het")]
     public int Get()
     {
-        _footballService.UpdatePlayer(
+        _footballService.AddPlayer(
             new PlayerDTO
             {
-                Forename = "tetUp1111111111111111111111",
-                Surname = "tet1",
-                _TeamName = "frfc31111111cwq"
+                Forename = "ALL",
+                Surname = "All",
+                NewTeamName = "Alllllll"
             }
         );
         return 1;

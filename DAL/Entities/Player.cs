@@ -17,23 +17,23 @@ public class Player
     public int Id { get; init; }
     
     [Column("forename")]
-    public string Forename { get; init; }
+    public string Forename { get; set; }
     
     [Column("surname")]
-    public string Surname  { get; init; }
+    public string Surname  { get; set; }
     
     [Column("sex")]
-    public Sex Sex { get; init; }
+    public Sex Sex { get; set; }
     
     [Column("birthday")]
-    public DateTime Birthday { get; init; }
+    public DateTime Birthday { get; set; }
     
     [Column("teamNameId")]
-    public int TeamNameId { get; init; }
+    public int TeamNameId { get; set; }
     
     [ForeignKey(nameof(TeamNameId))]
     public TeamName? TeamName { get; set; }
     
     [Column("country")]
-    public Country Country { get; init; }
+    public Country Country { get; set; }
 }

@@ -37,7 +37,7 @@ public class TeamNameRepository : IRepository<TeamName>
 
     public void Update(TeamName teamName)
     {
-        db.Update(teamName);
+        db.TeamNames.Update(teamName);
     }
 
     public void Delete(int id)

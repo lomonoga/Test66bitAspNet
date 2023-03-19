@@ -24,13 +24,9 @@ public class FootballService : IFootballService
     /// <param name="playerDTO">Light Player Model</param>
     public void AddPlayer(PlayerDTO playerDTO)
     {
+        playerDTO.TeamNameId = GetOrCreateTeamAndGetIDTeamName(playerDTO);
         var player = _mapper.Map<Player>(playerDTO);
-        // var teamName = db.TeamNames.GetFirstOfDefault(player.TeamName);
-        // if (teamName == null)
-        // {
-        //     db.TeamNames.Create(
-        //         new TeamName{Name = playerDTO.TeamName});
-        // }
+
         db.Players.Create(player);
         db.Save();
     }
@@ -45,16 +41,18 @@ public class FootballService : IFootballService
     /// Allows update one player data
     /// </summary>
     /// <param name="playerDTO">Player model to change in DB</param>
-    public void UpdatePlayer(PlayerDTO playerDTO)
+    public void UpdatePlayerWithTeamName(PlayerDTO playerDTO)
     {
-        if (db.Players.GetById(playerDTO.Id) == null) return;
-        var teamName = new TeamName {Name = playerDTO._TeamName};
-        if (db.TeamNames.GetFirstOfDefault(teamName) == null)
-            db.TeamNames.Create(teamName);
+        var player = db.Players.GetById(playerDTO.Id);
+        if (player == null) return;
         
-        teamName = db.TeamNames.GetFirstOfDefault(teamName);
-        playerDTO.TeamNameId = teamName.Id;
-        var player = _mapper.Map<Player>(playerDTO);
+        playerDTO.TeamNameId = GetOrCreateTeamAndGetIDTeamName(playerDTO);
+        player.Birthday = playerDTO.Birthday;
+        player.Country = playerDTO.Country;
+        player.Forename = playerDTO.Forename;
+        player.Sex = playerDTO.Sex;
+        player.Surname = playerDTO.Surname;
+
         db.Players.Update(player);
         db.Save();
     }
@@ -69,10 +67,15 @@ public class FootballService : IFootballService
         return _mapper.Map<IEnumerable<TeamNameDTO>>(db.TeamNames.GetAll());
     }
 
-    // private bool IsNameTeamInstance(TeamName teamName)
-    // {
-    //     return db.TeamNames.GetFirstOfDefault(teamName) != null;
-    // }
+    private int GetOrCreateTeamAndGetIDTeamName(PlayerDTO playerDTO)
+    {
+        var teamName = new TeamName {Name = playerDTO.NewTeamName};
+        if (db.TeamNames.GetFirstOfDefault(teamName) == null)
+            db.TeamNames.Create(teamName);
+        teamName = db.TeamNames.GetFirstOfDefault(teamName);
+        return teamName.Id;
+    }
+    
 
     public void Dispose()
     {

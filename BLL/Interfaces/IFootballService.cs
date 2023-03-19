@@ -6,6 +6,6 @@ public interface IFootballService
 {
     public void AddPlayer(PlayerDTO playerDTO);
     public IEnumerable<PlayerDTO> GetAllPlayers();
-    public void UpdatePlayer(PlayerDTO playerDTO);
+    public void UpdatePlayerWithTeamName(PlayerDTO playerDTO);
     public IEnumerable<TeamNameDTO> GetAllNameTeams();
 }

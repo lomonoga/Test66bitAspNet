@@ -1,11 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Humanizer;
-using Test66bit.DAL.Entities;
-using Test66bit.DAL.Entities.EnumEntities;
+﻿using Test66bit.DAL.Entities.EnumEntities;
 
-namespace Test66bit.BLL.DTO;
+namespace Test66bit.WEB.Models;
 
-public class PlayerDTO
+public class PlayerViewModel
 {
     public int Id { get; set; }
 

@@ -16,7 +16,7 @@ public class PlayerViewModel
 
     public int TeamNameId { get; set; }
     
-    public string NewTeamName { get; init; }
+    public string NewTeamName { get; set; }
 
     public Country Country { get; set; }
 }

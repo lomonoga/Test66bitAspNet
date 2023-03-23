@@ -27,6 +27,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMvc();
 
 var setting = new DalSetting(builder.Configuration);
 
@@ -36,11 +37,11 @@ builder.Services.AddDbContext<FootballContext>(options => options.UseNpgsql(sett
 
 builder.Services.AddScoped<IRepository<Player>, PlayerRepository>();
 builder.Services.AddScoped<IRepository<TeamName>, TeamNameRepository>();
-builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
-
-
 
 //BLL
+builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+
+//WEB
 builder.Services.AddScoped<IFootballService, FootballService>();
 
 

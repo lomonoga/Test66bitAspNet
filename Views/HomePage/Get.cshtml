@@ -1,0 +1,23 @@
+﻿@model System.Collections.Generic.IEnumerable<Test66bit.BLL.DTO.PlayerDTO>
+
+@{
+    ViewBag.Title = "AllPlayers";
+    Layout = null;
+}
+
+<body>
+<h2>All Players</h2>
+@{
+    foreach (var player in Model!)
+    {
+        <div>
+            <div>@player.Forename</div>
+            <div>@player.Surname</div>
+            <div>@player.Sex</div>
+            <div>@player.Country</div>
+            <div>@player.Birthday</div>
+            <div>@player.NewTeamName</div>
+        </div>
+    }
+}
+</body>

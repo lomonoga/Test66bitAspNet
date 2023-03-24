@@ -7,17 +7,33 @@
 
 <body>
 <h2>All Players</h2>
-@{
-    foreach (var player in Model!)
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Forename)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sex)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th>
+            TeamName
+        </th>
+    </tr>
+    @foreach (var player in Model!)
     {
-        <div>
-            <div>@player.Forename</div>
-            <div>@player.Surname</div>
-            <div>@player.Sex</div>
-            <div>@player.Country</div>
-            <div>@player.Birthday</div>
-            <div>@player.NewTeamName</div>
-        </div>
+        <tr>
+            <td>@player.Forename</td>
+            <td>@player.Surname</td>
+            <td>@player.Sex</td>
+            <td>@player.Country</td>
+            <td>@player.NewTeamName</td>
+        </tr>
     }
-}
+</table>
 </body>

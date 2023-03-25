@@ -67,6 +67,14 @@ public class FootballService : IFootballService
         return _mapper.Map<IEnumerable<TeamNameDTO>>(db.TeamNames.GetAll());
     }
 
+    public void AddTeam(string name)
+    {
+        var teamName = new TeamName {Name = name};
+        
+        db.TeamNames.Create(teamName);
+        db.Save();
+    }
+
     private int GetOrCreateTeamAndGetIDTeamName(PlayerDTO playerDTO)
     {
         var teamName = new TeamName {Name = playerDTO.NewTeamName};
@@ -75,7 +83,7 @@ public class FootballService : IFootballService
         teamName = db.TeamNames.GetFirstOfDefault(teamName);
         return teamName.Id;
     }
-    
+
 
     public void Dispose()
     {

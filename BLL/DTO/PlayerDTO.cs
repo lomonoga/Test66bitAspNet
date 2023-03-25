@@ -15,7 +15,7 @@ public class PlayerDTO
 
     public Sex Sex { get; set; }
 
-    public DateTime Birthday { get; set; }
+    public DateOnly Birthday { get; set; }
 
     public int TeamNameId { get; set; }
     

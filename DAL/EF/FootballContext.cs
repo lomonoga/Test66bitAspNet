@@ -14,6 +14,7 @@ public sealed class FootballContext : DbContext
     public FootballContext(DalSetting dalSetting)
     {
         _dalSetting = dalSetting;
+        
         // Check Database for existence 
 
         Database.EnsureCreated();

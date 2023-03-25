@@ -1,0 +1,67 @@
+﻿@using Test66bit.DAL.Entities.EnumEntities
+@model System.Collections.Generic.IEnumerable<Test66bit.BLL.DTO.TeamNameDTO>
+
+@{
+    ViewBag.Title = "AddPlayer";
+    Layout = null;
+}
+
+
+<body>
+<h1>Добавить игрока</h1>
+@using (Html.BeginForm("AddPlayer", "FootballPage", FormMethod.Post))
+{
+    <input type="hidden" name="Id" value="0"/>
+    <input type="hidden" name="TeamNameId" value="0"/>
+    
+    <p>
+        @Html.Label("Forename", "Введите имя")
+        @Html.TextBox("Forename")
+    </p>
+    
+    <p>
+        @Html.Label("Surname", "Введите фамилию")
+        @Html.TextBox("Surname")
+    </p>
+    
+    <p>
+        @Html.Label("Sex", "Выберите пол")
+        @Html.DropDownList("Sex", Html.GetEnumSelectList(typeof(Sex)))
+    </p>
+    
+
+    <p>
+        @Html.Label("Country", "Выберите Страну", new { type="date"})
+        @Html.DropDownList("Country", Html.GetEnumSelectList(typeof(Country)))
+    </p>
+    
+    <p>
+        <label>Выберите команду</label>
+        <select name="NewTeamName">
+            @foreach (var name in Model!)
+            {
+                <option value="@name.Name">@name.Name</option>
+            }
+        </select>
+    </p>
+
+    <p>
+        @Html.Label("Birthday", "Выберите дату рождения")
+        @Html.TextBox("Birthday", "", new {type = "date"})
+    </p>
+    
+    <p>
+        <input type="submit" value="Отправить" />
+    </p>
+}
+
+@using (Html.BeginForm("AddTeam", "FootballPage", FormMethod.Post))
+{
+    <h2>Если нужный команды нет, то вы можете её добавть здесь</h2>
+    @Html.Label("name", "Введите команду")
+    @Html.TextBox("name", "", new {type = "text"})
+    <p>
+        <input type="submit" value="Отправить" />
+    </p>
+}
+</body>

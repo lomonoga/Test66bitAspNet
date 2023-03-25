@@ -11,6 +11,10 @@ public class MappingProfile : Profile {
         CreateMap<PlayerDTO, Player>();
         CreateMap<TeamName, TeamNameDTO>();
         CreateMap<TeamNameDTO, TeamName>();
+        CreateMap<TeamNameDTO, TeamNameViewModel>();
+        CreateMap<TeamNameViewModel, TeamNameDTO>();
+        CreateMap<PlayerViewModel, PlayerDTO>();
+        CreateMap<PlayerDTO, PlayerViewModel>();
         CreateMap<IEnumerable<TeamName>, List<TeamNameDTO>>();
         CreateMap<List<TeamNameDTO>, IEnumerable<TeamName>>();
         CreateMap<IEnumerable<Player>, List<PlayerDTO>>();

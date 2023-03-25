@@ -16,17 +16,21 @@ public class Player
     [Key]
     public int Id { get; init; }
     
+    [Required (ErrorMessage = "Не указана имя")]
     [Column("forename")]
     public string Forename { get; set; }
     
+    [Required (ErrorMessage = "Не указана фамилия")]
     [Column("surname")]
     public string Surname  { get; set; }
     
+    [Required (ErrorMessage = "Не указан пол")]
     [Column("sex")]
     public Sex Sex { get; set; }
     
+    [Required (ErrorMessage = "Не указана дата рождения")]
     [Column("birthday")]
-    public DateTime Birthday { get; set; }
+    public DateOnly Birthday { get; set; }
     
     [Column("teamNameId")]
     public int TeamNameId { get; set; }
@@ -34,6 +38,7 @@ public class Player
     [ForeignKey(nameof(TeamNameId))]
     public TeamName? TeamName { get; set; }
     
+    [Required (ErrorMessage = "Не указана страна")]
     [Column("country")]
     public Country Country { get; set; }
 }

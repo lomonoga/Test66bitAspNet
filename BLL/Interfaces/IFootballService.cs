@@ -8,4 +8,5 @@ public interface IFootballService
     public IEnumerable<PlayerDTO> GetAllPlayers();
     public void UpdatePlayerWithTeamName(PlayerDTO playerDTO);
     public IEnumerable<TeamNameDTO> GetAllNameTeams();
+    public void AddTeam(string name);
 }

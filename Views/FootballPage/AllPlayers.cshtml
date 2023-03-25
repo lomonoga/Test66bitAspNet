@@ -1,4 +1,5 @@
-﻿@model System.Collections.Generic.IEnumerable<Test66bit.BLL.DTO.PlayerDTO>
+﻿@using Test66bit.DAL.Entities.EnumEntities
+@model System.Collections.Generic.IEnumerable<Test66bit.BLL.DTO.PlayerDTO>
 
 @{
     ViewBag.Title = "AllPlayers";
@@ -24,15 +25,62 @@
         <th>
             TeamName
         </th>
+        <th>
+            Birthday
+        </th>
+        <th>
+            Edit Birthday
+        </th>
     </tr>
     @foreach (var player in Model!)
     {
         <tr>
-            <td>@player.Forename</td>
-            <td>@player.Surname</td>
-            <td>@player.Sex</td>
-            <td>@player.Country</td>
-            <td>@player.NewTeamName</td>
+        @using (Html.BeginForm("EditPlayer", "FootballPage", FormMethod.Post))
+        {
+            <input type="hidden" name="Id" value="@player.Id"/>
+            <input type="hidden" name="TeamNameId" value="@player.TeamNameId"/>
+    
+            <td>
+                @Html.TextBox("Forename", @player.Forename)
+            </td>
+    
+             <td>
+                 @Html.TextBox("Surname", @player.Surname)
+             </td>
+    
+             <td>
+                 <select name="Sex">
+                     <option value=@player.Sex>"@player.Sex</option>
+                     <option value=Male>Male</option>
+                     <option value=Female>Female</option>
+                 </select>
+             </td>
+             
+            <td>
+                <select name="Country">
+                    <option value=@player.Country>"@player.Country</option>
+                    <option value=Russia>Russia</option>
+                    <option value=USA>USA</option>
+                    <option value=Italy>Italy</option>
+                </select>
+            </td>
+            
+            <td>
+                 @Html.TextBox("NewTeamName", @player.NewTeamName, new {type = "text"})
+            </td>
+            
+            <td>
+                @Html.Label("Birthday", @player.Birthday.ToString())
+            </td>
+            
+            <td>
+                @Html.TextBox("Birthday", @player.Birthday, new {type = "date"})
+            </td>
+
+            <td>
+                <input type="submit" value="Изменить" />
+             </td>
+        }
         </tr>
     }
 </table>

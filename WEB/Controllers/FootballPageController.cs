@@ -18,6 +18,26 @@ public class FootballPageController : Controller
         _footballService = footballService;
         _mapper = mapper;
     }
+    
+    [HttpGet]
+    public ActionResult AddPlayer()
+    {
+        var allTemNames = _footballService.GetAllNameTeams();
+        return View(allTemNames);
+    }
+
+    [HttpGet]
+    public ActionResult AllPlayers()
+    {
+        var playersDTO = _footballService.GetAllPlayers();
+        var teamsDTO = _footballService.GetAllNameTeams();
+        foreach (var player in playersDTO)
+        {
+            player.NewTeamName = teamsDTO.First(team => team.Id == player.TeamNameId).Name;
+        }
+
+        return View(playersDTO);
+    }
 
     [HttpPost]
     public ActionResult AddTeam([FromForm] string name)
@@ -48,23 +68,18 @@ public class FootballPageController : Controller
         }
     }
 
-    [HttpGet]
-    public ActionResult AddPlayer()
+    [HttpPost]
+    public ActionResult EditPlayer([FromForm] PlayerViewModel playerViewModel)
     {
-        var allTemNames = _footballService.GetAllNameTeams();
-        return View(allTemNames);
-    }
-
-    [HttpGet]
-    public ActionResult AllPlayers()
-    {
-        var playersDTO = _footballService.GetAllPlayers();
-        var teamsDTO = _footballService.GetAllNameTeams();
-        foreach (var player in playersDTO)
+        try
         {
-            player.NewTeamName = teamsDTO.First(team => team.Id == player.TeamNameId).Name;
+            var playerDto = _mapper.Map<PlayerDTO>(playerViewModel);
+            _footballService.UpdatePlayerWithTeamName(playerDto);
+            return Content("Player is updated");
         }
-
-        return View(playersDTO);
+        catch (Exception e)
+        {
+            return StatusCode(400);
+        }
     }
 }
